@@ -2,15 +2,24 @@ package com.example.motivationaltasktracker;
 
 public class Tasks {
     private String name;
-    private String date;
+    private int month;
+    private int date;
     private boolean isDone;
     private int difficulty;
 
-    public Tasks(String name, String date, boolean isDone, int difficulty){
+    public Tasks(String name, int date, boolean isDone, int difficulty){
         this.date = date;
         this.name = name;
         this.isDone = isDone;
         this.difficulty = difficulty;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
     }
 
     public String getName() {
@@ -21,11 +30,11 @@ public class Tasks {
         this.name = name;
     }
 
-    public String getDate() {
+    public int getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(int date) {
         this.date = date;
     }
 
