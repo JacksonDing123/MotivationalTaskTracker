@@ -1,6 +1,10 @@
 package com.example.motivationaltasktracker;
 
+import javafx.geometry.Pos;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 
 public class Tasks {
     private String name;
@@ -56,16 +60,27 @@ public class Tasks {
         this.difficulty = difficulty;
     }
 
-    public void showTask(){
+    public void showTask(Pane pane){
         // Create a Label for task information
-        Label taskLabel = new Label("Task: Complete JavaFX Tutorial");
+        Label taskLabel = new Label(this.name + " date: " + this.date + "/" + this.month + " difficulty: " + this.difficulty);
 
         // Create a CheckBox for task completion status
-        CheckBox doneCheckBox = new CheckBox("Done");
+        CheckBox doneCheckBox = new CheckBox();
+        doneCheckBox.setSelected(this.isDone);
+
+        // Add an event handler to the checkbox
+        doneCheckBox.setOnAction(event -> {
+            if (doneCheckBox.isSelected()) {
+                //motivational Quotes
+            } else {
+                //moticational Quotes
+            }
+        });
 
         // Create an HBox to hold the Label and CheckBox
         HBox hbox = new HBox(10); // 10 is the spacing between elements
         hbox.setAlignment(Pos.CENTER); // Center the elements horizontally
         hbox.getChildren().addAll(taskLabel, doneCheckBox);
+        pane.getChildren().add(hbox);
     }
 }
