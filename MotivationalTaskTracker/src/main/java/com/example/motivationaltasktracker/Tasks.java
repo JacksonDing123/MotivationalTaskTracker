@@ -1,5 +1,7 @@
 package com.example.motivationaltasktracker;
 
+import javafx.scene.control.Label;
+
 public class Tasks {
     private String name;
     private int month;
@@ -52,5 +54,18 @@ public class Tasks {
 
     public void setDifficulty(int difficulty) {
         this.difficulty = difficulty;
+    }
+
+    public void showTask(){
+        // Create a Label for task information
+        Label taskLabel = new Label("Task: Complete JavaFX Tutorial");
+
+        // Create a CheckBox for task completion status
+        CheckBox doneCheckBox = new CheckBox("Done");
+
+        // Create an HBox to hold the Label and CheckBox
+        HBox hbox = new HBox(10); // 10 is the spacing between elements
+        hbox.setAlignment(Pos.CENTER); // Center the elements horizontally
+        hbox.getChildren().addAll(taskLabel, doneCheckBox);
     }
 }
