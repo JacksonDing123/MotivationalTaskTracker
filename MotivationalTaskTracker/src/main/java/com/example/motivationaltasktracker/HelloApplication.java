@@ -13,10 +13,13 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class HelloApplication extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
+
+        ArrayList<Tasks> taskList = new ArrayList<Tasks>();
 
         // Create a StackPane (a simple layout pane)
         VBox root = new VBox();
@@ -36,9 +39,6 @@ public class HelloApplication extends Application {
         Label title = new Label("Motivational Task Tracker");
         root.getChildren().add(title);
 
-        Tasks task1 = new Tasks("task 1", 13, true, 3);
-        task1.showTask(root);
-
         Button createTask = new Button("Create Task");
 
         // Create a TextField for user input
@@ -50,10 +50,18 @@ public class HelloApplication extends Application {
         date.setPromptText("Date");
 
         // Create a TextField for user input
-        TextField month = new TextField();
-        month.setPromptText("Month");
+        TextField difficulty = new TextField();
+        difficulty.setPromptText("Difficulty");
 
-        root.getChildren().addAll(createTask, name, date, month);
+        root.getChildren().addAll(createTask, name, date, difficulty);
+
+        createTask.setOnAction(event -> {
+            taskList.add(new Tasks(name.getText(), Integer.parseInt(date.getText()), false, Integer.parseInt(difficulty.getText())));
+            taskList.get(taskList.size()-1).showTask(root);
+            name.clear();
+            date.clear();
+            difficulty.clear();
+        });
 
         // Show the Stage
         primaryStage.show();
