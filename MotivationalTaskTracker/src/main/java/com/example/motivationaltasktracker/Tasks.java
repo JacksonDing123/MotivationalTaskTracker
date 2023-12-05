@@ -71,7 +71,7 @@ public class Tasks {
         // Add an event handler to the checkbox
         doneCheckBox.setOnAction(event -> {
             if (doneCheckBox.isSelected()) {
-                //motivational Quotes
+                //move to a new scene and see
             } else {
                 //moticational Quotes
             }
