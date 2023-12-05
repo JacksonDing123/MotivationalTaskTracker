@@ -16,10 +16,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class HelloApplication extends Application {
+
+    private int taskIDSet = 0;
     @Override
     public void start(Stage primaryStage) throws IOException {
-
-        ArrayList<Tasks> taskList = new ArrayList<Tasks>();
 
         // Create a StackPane (a simple layout pane)
         VBox root = new VBox();
@@ -50,16 +50,21 @@ public class HelloApplication extends Application {
         date.setPromptText("Date");
 
         // Create a TextField for user input
+        TextField month = new TextField();
+        month.setPromptText("month");
+
+        // Create a TextField for user input
         TextField difficulty = new TextField();
         difficulty.setPromptText("Difficulty");
 
-        root.getChildren().addAll(createTask, name, date, difficulty);
+        root.getChildren().addAll(createTask, name, date, month, difficulty);
 
         createTask.setOnAction(event -> {
-            taskList.add(new Tasks(name.getText(), Integer.parseInt(date.getText()), false, Integer.parseInt(difficulty.getText())));
-            taskList.get(taskList.size()-1).showTask(root);
+            Tasks.taskList.add(new Tasks(name.getText(), Integer.parseInt(date.getText()), Integer.parseInt(month.getText()), false, Integer.parseInt(difficulty.getText()), taskIDSet++));
+            Tasks.taskList.get(Tasks.taskList.size()-1).showTask(root);
             name.clear();
             date.clear();
+            month.clear();
             difficulty.clear();
         });
 

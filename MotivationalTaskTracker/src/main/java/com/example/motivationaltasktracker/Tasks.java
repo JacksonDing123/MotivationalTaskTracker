@@ -6,6 +6,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
+import java.util.ArrayList;
+
 public class Tasks {
     private String name;
     private int month;
@@ -13,11 +15,24 @@ public class Tasks {
     private boolean isDone;
     private int difficulty;
 
-    public Tasks(String name, int date, boolean isDone, int difficulty){
+    private int taskID;
+
+    private CheckBox doneCheckBox;
+
+    private Label display;
+
+    public static ArrayList<Tasks> taskList = new ArrayList<Tasks>();
+
+    public Tasks(String name, int date, int month, boolean isDone, int difficulty, int taskID){
         this.date = date;
         this.name = name;
+        this.month = month;
         this.isDone = isDone;
         this.difficulty = difficulty;
+        this.taskID = taskID;
+        doneCheckBox = new CheckBox();
+        doneCheckBox.setSelected(isDone);
+        display = new Label(this.name + " date: " + this.date + "/" + this.month + " difficulty: " + this.difficulty);
     }
 
     public int getMonth() {
@@ -60,27 +75,35 @@ public class Tasks {
         this.difficulty = difficulty;
     }
 
+    public int getTaskID() {
+        return taskID;
+    }
+
     public void showTask(Pane pane){
-        // Create a Label for task information
-        Label taskLabel = new Label(this.name + " date: " + this.date + "/" + this.month + " difficulty: " + this.difficulty);
+        // Create an HBox to hold the Label and CheckBox
+        HBox hbox = new HBox(10); // 10 is the spacing between elements
+        hbox.setAlignment(Pos.CENTER); // Center the elements horizontally
+        hbox.getChildren().addAll(display, doneCheckBox);
+        pane.getChildren().add(hbox);
+    }
 
-        // Create a CheckBox for task completion status
-        CheckBox doneCheckBox = new CheckBox();
-        doneCheckBox.setSelected(this.isDone);
+    public Tasks getTask(int taskID){
+        for(int i = 0; i<taskList.size(); i++){
+            if(taskList.get(i).getTaskID()==taskID){
+                return taskList.get(i);
+            }
+        }
+        return null;
+    }
 
+    public void showMotivation(){
         // Add an event handler to the checkbox
         doneCheckBox.setOnAction(event -> {
             if (doneCheckBox.isSelected()) {
-                //move to a new scene and see
+
             } else {
                 //moticational Quotes
             }
         });
-
-        // Create an HBox to hold the Label and CheckBox
-        HBox hbox = new HBox(10); // 10 is the spacing between elements
-        hbox.setAlignment(Pos.CENTER); // Center the elements horizontally
-        hbox.getChildren().addAll(taskLabel, doneCheckBox);
-        pane.getChildren().add(hbox);
     }
 }
