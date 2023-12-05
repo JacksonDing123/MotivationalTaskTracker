@@ -68,6 +68,8 @@ public class HelloApplication extends Application {
             difficulty.clear();
         });
 
+
+
         // Show the Stage
         primaryStage.show();
     }

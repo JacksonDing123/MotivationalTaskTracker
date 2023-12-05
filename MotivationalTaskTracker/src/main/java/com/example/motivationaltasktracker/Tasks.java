@@ -21,6 +21,9 @@ public class Tasks {
 
     private Label display;
 
+    // Create an HBox to hold the Label and CheckBox
+    HBox hbox;
+
     public static ArrayList<Tasks> taskList = new ArrayList<Tasks>();
 
     public Tasks(String name, int date, int month, boolean isDone, int difficulty, int taskID){
@@ -33,6 +36,9 @@ public class Tasks {
         doneCheckBox = new CheckBox();
         doneCheckBox.setSelected(isDone);
         display = new Label(this.name + " date: " + this.date + "/" + this.month + " difficulty: " + this.difficulty);
+        hbox = new HBox(10); // 10 is the spacing between elements
+        hbox.setAlignment(Pos.CENTER); // Center the elements horizontally
+        hbox.getChildren().addAll(display, doneCheckBox);
     }
 
     public int getMonth() {
@@ -80,30 +86,23 @@ public class Tasks {
     }
 
     public void showTask(Pane pane){
-        // Create an HBox to hold the Label and CheckBox
-        HBox hbox = new HBox(10); // 10 is the spacing between elements
-        hbox.setAlignment(Pos.CENTER); // Center the elements horizontally
-        hbox.getChildren().addAll(display, doneCheckBox);
         pane.getChildren().add(hbox);
+
+        doneCheckBox.setOnAction(event -> {
+            if (doneCheckBox.isSelected()) {
+                pane.getChildren().remove(hbox);
+            } else {
+                //moticational Quotes
+            }
+        });
     }
 
-    public Tasks getTask(int taskID){
+    public static Tasks getTask(int taskID){
         for(int i = 0; i<taskList.size(); i++){
             if(taskList.get(i).getTaskID()==taskID){
                 return taskList.get(i);
             }
         }
         return null;
-    }
-
-    public void showMotivation(){
-        // Add an event handler to the checkbox
-        doneCheckBox.setOnAction(event -> {
-            if (doneCheckBox.isSelected()) {
-
-            } else {
-                //moticational Quotes
-            }
-        });
     }
 }
