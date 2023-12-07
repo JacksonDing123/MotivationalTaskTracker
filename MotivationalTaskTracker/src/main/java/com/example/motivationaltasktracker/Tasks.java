@@ -7,6 +7,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
+import java.io.FileWriter;
+import java.io.IOException;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 public class Tasks {
     private String name;
@@ -91,6 +95,12 @@ public class Tasks {
         doneCheckBox.setOnAction(event -> {
             if (doneCheckBox.isSelected()) {
                 pane.getChildren().remove(hbox);
+                taskList.remove(Tasks.getTask(this.taskID));
+                try {
+                    Tasks.updateTaskList();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             } else {
                 //moticational Quotes
             }
@@ -104,5 +114,35 @@ public class Tasks {
             }
         }
         return null;
+    }
+
+    public static void updateTaskList() throws IOException{
+
+        //JSONArray taskListJson = new JSONArray();
+        FileWriter file = new FileWriter("/Users/jacksonding/Documents/AP CompSCi/MotivationalTaskTracker/MotivationalTaskTracker/src/main/java/com/example/motivationaltasktracker/info.json");
+
+        JSONArray taskListJson = new JSONArray();
+
+        for(int i = 0; i< taskList.size(); i++){
+
+            JSONObject temp = new JSONObject();
+            temp.put("Name", taskList.get(i).getName());
+            temp.put("Month", taskList.get(i).getMonth());
+            temp.put("Date", taskList.get(i).getDate());
+            temp.put("IsDone", taskList.get(i).isDone());
+            temp.put("Difficulty", taskList.get(i).getDifficulty());
+            temp.put("taskID", taskList.get(i).getTaskID());
+            taskListJson.add(temp);
+        }
+
+        try{
+            //We can write any JSONArray or JSONObject instance to the file
+            file.write(taskListJson.toJSONString());
+            file.flush();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }

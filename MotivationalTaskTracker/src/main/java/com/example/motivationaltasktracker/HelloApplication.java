@@ -66,6 +66,11 @@ public class HelloApplication extends Application {
             date.clear();
             month.clear();
             difficulty.clear();
+            try {
+                Tasks.updateTaskList();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
 
 
