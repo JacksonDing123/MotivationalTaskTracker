@@ -8,7 +8,7 @@ import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
 
-public class Tasks {
+public class Tasks extends HelloApplication{
     private String name;
     private int month;
     private int date;
@@ -91,8 +91,7 @@ public class Tasks {
         doneCheckBox.setOnAction(event -> {
             if (doneCheckBox.isSelected()) {
                 pane.getChildren().remove(hbox);
-            } else {
-                //moticational Quotes
+                
             }
         });
     }
