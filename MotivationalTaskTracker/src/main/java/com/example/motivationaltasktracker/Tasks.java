@@ -1,6 +1,12 @@
 package com.example.motivationaltasktracker;
 
+import javafx.geometry.Pos;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+
+import java.util.ArrayList;
 
 public class Tasks {
     private String name;
@@ -9,11 +15,30 @@ public class Tasks {
     private boolean isDone;
     private int difficulty;
 
-    public Tasks(String name, int date, boolean isDone, int difficulty){
+    private int taskID;
+
+    private CheckBox doneCheckBox;
+
+    private Label display;
+
+    // Create an HBox to hold the Label and CheckBox
+    HBox hbox;
+
+    public static ArrayList<Tasks> taskList = new ArrayList<Tasks>();
+
+    public Tasks(String name, int date, int month, boolean isDone, int difficulty, int taskID){
         this.date = date;
         this.name = name;
+        this.month = month;
         this.isDone = isDone;
         this.difficulty = difficulty;
+        this.taskID = taskID;
+        doneCheckBox = new CheckBox();
+        doneCheckBox.setSelected(isDone);
+        display = new Label(this.name + " date: " + this.date + "/" + this.month + " difficulty: " + this.difficulty);
+        hbox = new HBox(10); // 10 is the spacing between elements
+        hbox.setAlignment(Pos.CENTER); // Center the elements horizontally
+        hbox.getChildren().addAll(display, doneCheckBox);
     }
 
     public int getMonth() {
@@ -56,16 +81,28 @@ public class Tasks {
         this.difficulty = difficulty;
     }
 
-    public void showTask(){
-        // Create a Label for task information
-        Label taskLabel = new Label("Task: Complete JavaFX Tutorial");
+    public int getTaskID() {
+        return taskID;
+    }
 
-        // Create a CheckBox for task completion status
-        CheckBox doneCheckBox = new CheckBox("Done");
+    public void showTask(Pane pane){
+        pane.getChildren().add(hbox);
 
-        // Create an HBox to hold the Label and CheckBox
-        HBox hbox = new HBox(10); // 10 is the spacing between elements
-        hbox.setAlignment(Pos.CENTER); // Center the elements horizontally
-        hbox.getChildren().addAll(taskLabel, doneCheckBox);
+        doneCheckBox.setOnAction(event -> {
+            if (doneCheckBox.isSelected()) {
+                pane.getChildren().remove(hbox);
+            } else {
+                //moticational Quotes
+            }
+        });
+    }
+
+    public static Tasks getTask(int taskID){
+        for(int i = 0; i<taskList.size(); i++){
+            if(taskList.get(i).getTaskID()==taskID){
+                return taskList.get(i);
+            }
+        }
+        return null;
     }
 }
