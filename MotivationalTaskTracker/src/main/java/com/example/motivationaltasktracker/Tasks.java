@@ -5,10 +5,10 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-
+import java.util.Timer;
 import java.util.ArrayList;
 
-public class Tasks {
+public class Tasks extends HelloApplication{
     private String name;
     private int month;
     private int date;
@@ -20,6 +20,7 @@ public class Tasks {
     private CheckBox doneCheckBox;
 
     private Label display;
+    private Label displayQuotes = new Label();
 
     // Create an HBox to hold the Label and CheckBox
     HBox hbox;
@@ -85,14 +86,38 @@ public class Tasks {
         return taskID;
     }
 
+    public static ArrayList<String> Quotes = new ArrayList<String>();{
+        Quotes.add("I don't stop when I'm tired, I stop when I'm done.");
+        Quotes.add("Everyone fails sometimes and life isn’t supposed to be fair, much less bend to your every whim");
+        Quotes.add("Nobody cares what you did yesterday. What have you done today");
+        Quotes.add("You gotta start your journey. It may suck, but eventually you will come out the other side on top.");
+        Quotes.add("We don’t rise to the level of our expectations, we fall to the level of our training.");
+        Quotes.add("No one is going to come help you. No one’s coming to save you.");
+        Quotes.add("There is no better way to grow as a person than to do something everyday that you hate.");
+        Quotes.add("You can’t use up creativity. The more you use, the more you have.");
+    }
+
     public void showTask(Pane pane){
         pane.getChildren().add(hbox);
+
+        pane.getChildren().add(displayQuotes);
+        displayQuotes.setVisible(false);
+
+
+
+        int max = 7;
+        int min = 0;
+        int range = max - min + 1;
 
         doneCheckBox.setOnAction(event -> {
             if (doneCheckBox.isSelected()) {
                 pane.getChildren().remove(hbox);
-            } else {
-                //moticational Quotes
+                int random = (int) (Math.random()*range) + min;
+                displayQuotes.setText(Quotes.get(random));
+                displayQuotes.setVisible(true);
+                //motivated.setVisible(true);
+
+                
             }
         });
     }
