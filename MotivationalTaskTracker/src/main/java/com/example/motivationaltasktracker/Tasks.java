@@ -6,11 +6,15 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.io.FileWriter;
 import java.io.IOException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 public class Tasks {
     private String name;
@@ -125,14 +129,18 @@ public class Tasks {
 
         for(int i = 0; i< taskList.size(); i++){
 
-            JSONObject temp = new JSONObject();
-            temp.put("Name", taskList.get(i).getName());
-            temp.put("Month", taskList.get(i).getMonth());
-            temp.put("Date", taskList.get(i).getDate());
-            temp.put("IsDone", taskList.get(i).isDone());
-            temp.put("Difficulty", taskList.get(i).getDifficulty());
-            temp.put("taskID", taskList.get(i).getTaskID());
-            taskListJson.add(temp);
+            JSONObject tempInfo = new JSONObject();
+            tempInfo.put("Name", taskList.get(i).getName());
+            tempInfo.put("Month", taskList.get(i).getMonth());
+            tempInfo.put("Date", taskList.get(i).getDate());
+            tempInfo.put("IsDone", taskList.get(i).isDone());
+            tempInfo.put("Difficulty", taskList.get(i).getDifficulty());
+            tempInfo.put("taskID", taskList.get(i).getTaskID());
+
+            JSONObject tempTask = new JSONObject();
+            tempTask.put("Task", tempInfo);
+
+            taskListJson.add(tempTask);
         }
 
         try{
@@ -144,5 +152,45 @@ public class Tasks {
             e.printStackTrace();
         }
 
+    }
+
+    public static void readTasks(){
+        //JSON parser object to parse read file
+        JSONParser jsonParser = new JSONParser();
+
+        try (FileReader reader = new FileReader("info.json"))
+        {
+            //Read JSON file
+            Object obj = jsonParser.parse(reader);
+
+            JSONArray taskList = (JSONArray) obj;
+            //System.out.println(employeeList);
+
+            //Iterate over employee array
+            taskList.forEach( emp -> parseTaskObject( (JSONObject) emp ) );
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void parseTaskObject(JSONObject task)
+    {
+        //Get employee object within list
+        JSONObject thisTask = (JSONObject) task.get("task");
+
+        //Get employee first name
+        String firstName = (String) thisTask.get("firstName");
+        //System.out.println(firstName);
+
+        //Get employee last name
+        String lastName = (String) thisTask.get("lastName");
+        //System.out.println(lastName);
+
+        //Get employee website name
+        String website = (String) thisTask.get("website");
+        //System.out.println(website);
     }
 }
