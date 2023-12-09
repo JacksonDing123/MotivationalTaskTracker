@@ -58,7 +58,16 @@ public class HelloApplication extends Application {
         TextField difficulty = new TextField();
         difficulty.setPromptText("Difficulty");
 
-        root.getChildren().addAll(createTask, name, date, month, difficulty);
+        //Create a button for the user to state if they are motivated 
+        Button motivated = new Button();
+        motivated.setMinHeight(50);
+        motivated.setMinWidth(100);
+        motivated.setLayoutX(100);
+        motivated.setLayoutY(125);
+
+
+        root.getChildren().addAll(createTask, name, date, month, difficulty,motivated);
+        motivated.setVisible(false);
 
         createTask.setOnAction(event -> {
             Tasks.taskList.add(new Tasks(name.getText(), Integer.parseInt(date.getText()), Integer.parseInt(month.getText()), false, Integer.parseInt(difficulty.getText()), taskIDSet++));
@@ -73,18 +82,6 @@ public class HelloApplication extends Application {
 
         // Show the Stage
         primaryStage.show();
-    }
-
-    public static void MotivationArray(){
-        ArrayList<String> Quotes = new ArrayList<String>();
-        Quotes.add("I don't stop when I'm tired, I stop when I'm done.");
-        Quotes.add("Everyone fails sometimes and life isn’t supposed to be fair, much less bend to your every whim");
-        Quotes.add("Nobody cares what you did yesterday. What have you done today");
-        Quotes.add("You gotta start your journey. It may suck, but eventually you will come out the other side on top.");
-        Quotes.add("We don’t rise to the level of our expectations, we fall to the level of our training.");
-        Quotes.add("No one is going to come help you. No one’s coming to save you.");
-        Quotes.add("There is no better way to grow as a person than to do something everyday that you hate.");
-        Quotes.add("You can’t use up creativity. The more you use, the more you have.");
     }
 
     public static void main(String[] args) {

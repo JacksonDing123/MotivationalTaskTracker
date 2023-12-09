@@ -1,6 +1,7 @@
 package com.example.motivationaltasktracker;
 
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -103,7 +104,11 @@ public class Tasks extends HelloApplication{
         pane.getChildren().add(displayQuotes);
         displayQuotes.setVisible(false);
 
-
+        Button motivated = new Button();
+        motivated.setMinHeight(50);
+        motivated.setMinWidth(100);
+        motivated.setLayoutX(100);
+        motivated.setLayoutY(125);
 
         int max = 7;
         int min = 0;
@@ -115,7 +120,7 @@ public class Tasks extends HelloApplication{
                 int random = (int) (Math.random()*range) + min;
                 displayQuotes.setText(Quotes.get(random));
                 displayQuotes.setVisible(true);
-                //motivated.setVisible(true);
+                motivated.setVisible(true);
 
                 
             }
