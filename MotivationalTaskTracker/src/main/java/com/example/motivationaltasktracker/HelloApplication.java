@@ -59,6 +59,9 @@ public class HelloApplication extends Application {
 
         root.getChildren().addAll(createTask, name, date, month, difficulty);
 
+        Tasks.readTasks();
+        Tasks.updateTaskList();
+
         createTask.setOnAction(event -> {
             Tasks.taskList.add(new Tasks(name.getText(), Integer.parseInt(date.getText()), Integer.parseInt(month.getText()), false, Integer.parseInt(difficulty.getText()), taskIDSet++));
             Tasks.taskList.get(Tasks.taskList.size()-1).showTask(root);

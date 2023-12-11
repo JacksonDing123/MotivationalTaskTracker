@@ -158,16 +158,21 @@ public class Tasks {
         //JSON parser object to parse read file
         JSONParser jsonParser = new JSONParser();
 
-        try (FileReader reader = new FileReader("info.json"))
+        try (FileReader reader = new FileReader("/Users/jacksonding/Documents/AP CompSCi/MotivationalTaskTracker/MotivationalTaskTracker/src/main/java/com/example/motivationaltasktracker/info.json"))
         {
+
             //Read JSON file
             Object obj = jsonParser.parse(reader);
+            //JSONArray taskList = (JSONArray) obj;
 
             JSONArray taskList = (JSONArray) obj;
-            //System.out.println(employeeList);
 
-            //Iterate over employee array
-            taskList.forEach( emp -> parseTaskObject( (JSONObject) emp ) );
+            if (taskList instanceof JSONArray) {
+//                JSONObject jsonObject = (JSONObject) obj;
+                taskList.forEach( emp -> parseTaskObject( (JSONObject) emp ) );//emp is a array
+            } else {
+                System.out.println("The file does not contain a JSON object.");
+            }
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -176,21 +181,21 @@ public class Tasks {
         }
     }
 
-    private static void parseTaskObject(JSONObject task)
+    private static void parseTaskObject(JSONObject thisTask)
     {
-        //Get employee object within list
-        JSONObject thisTask = (JSONObject) task.get("task");
 
-        //Get employee first name
-        String firstName = (String) thisTask.get("firstName");
-        //System.out.println(firstName);
+        String tdate = (String) thisTask.get("Date");
 
-        //Get employee last name
-        String lastName = (String) thisTask.get("lastName");
-        //System.out.println(lastName);
+        String tisDone = (String) thisTask.get("isDone");
 
-        //Get employee website name
-        String website = (String) thisTask.get("website");
-        //System.out.println(website);
+        String tname = (String) thisTask.get("Name");
+
+        String tmonth = (String) thisTask.get("Month");
+
+        String tdifficulty = (String) thisTask.get("Difficulty");
+
+        String ttaskID = (String) thisTask.get("TaskID");
+
+        taskList.add(new Tasks( tname, Integer.parseInt(tdate), Integer.parseInt(tmonth), Boolean.parseBoolean(tisDone), Integer.parseInt(tdifficulty), Integer.parseInt(ttaskID)));
     }
 }
