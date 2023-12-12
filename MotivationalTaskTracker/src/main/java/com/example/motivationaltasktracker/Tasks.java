@@ -6,11 +6,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
 import java.util.ArrayList;
-import java.io.FileWriter;
-import java.io.IOException;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -122,8 +120,10 @@ public class Tasks {
 
     public static void updateTaskList() throws IOException{
 
+        File info = new File("/Users/jacksonding/Documents/AP CompSCi/MotivationalTaskTracker/MotivationalTaskTracker/src/main/java/com/example/motivationaltasktracker/info.json");
+
         //JSONArray taskListJson = new JSONArray();
-        FileWriter file = new FileWriter("/Users/jacksonding/Documents/AP CompSCi/MotivationalTaskTracker/MotivationalTaskTracker/src/main/java/com/example/motivationaltasktracker/info.json");
+        FileWriter file = new FileWriter(info);
 
         JSONArray taskListJson = new JSONArray();
 
@@ -158,7 +158,9 @@ public class Tasks {
         //JSON parser object to parse read file
         JSONParser jsonParser = new JSONParser();
 
-        try (FileReader reader = new FileReader("/Users/jacksonding/Documents/AP CompSCi/MotivationalTaskTracker/MotivationalTaskTracker/src/main/java/com/example/motivationaltasktracker/info.json"))
+        File info = new File("/Users/jacksonding/Documents/AP CompSCi/MotivationalTaskTracker/MotivationalTaskTracker/src/main/java/com/example/motivationaltasktracker/info.json");
+
+        try (FileReader reader = new FileReader(info))
         {
 
             //Read JSON file
