@@ -18,12 +18,12 @@ import org.json.simple.parser.ParseException;
 
 public class Tasks {
     private String name;
-    private int month;
-    private int date;
+    private long month;
+    private long date;
     private boolean isDone;
-    private int difficulty;
+    private long difficulty;
 
-    private int taskID;
+    private long taskID;
 
     private CheckBox doneCheckBox;
 
@@ -34,7 +34,7 @@ public class Tasks {
 
     public static ArrayList<Tasks> taskList = new ArrayList<Tasks>();
 
-    public Tasks(String name, int date, int month, boolean isDone, int difficulty, int taskID){
+    public Tasks(String name, long date, long month, boolean isDone, long difficulty, long taskID){
         this.date = date;
         this.name = name;
         this.month = month;
@@ -49,7 +49,7 @@ public class Tasks {
         hbox.getChildren().addAll(display, doneCheckBox);
     }
 
-    public int getMonth() {
+    public long getMonth() {
         return month;
     }
 
@@ -65,7 +65,7 @@ public class Tasks {
         this.name = name;
     }
 
-    public int getDate() {
+    public long getDate() {
         return date;
     }
 
@@ -81,7 +81,7 @@ public class Tasks {
         isDone = done;
     }
 
-    public int getDifficulty() {
+    public long getDifficulty() {
         return difficulty;
     }
 
@@ -89,7 +89,7 @@ public class Tasks {
         this.difficulty = difficulty;
     }
 
-    public int getTaskID() {
+    public long getTaskID() {
         return taskID;
     }
 
@@ -111,7 +111,7 @@ public class Tasks {
         });
     }
 
-    public static Tasks getTask(int taskID){
+    public static Tasks getTask(long taskID){
         for(int i = 0; i<taskList.size(); i++){
             if(taskList.get(i).getTaskID()==taskID){
                 return taskList.get(i);
@@ -137,10 +137,10 @@ public class Tasks {
             tempInfo.put("Difficulty", taskList.get(i).getDifficulty());
             tempInfo.put("taskID", taskList.get(i).getTaskID());
 
-            JSONObject tempTask = new JSONObject();
-            tempTask.put("Task", tempInfo);
+            //JSONObject tempTask = new JSONObject();
+            //tempTask.put("Task", tempInfo);
 
-            taskListJson.add(tempTask);
+            taskListJson.add(tempInfo);
         }
 
         try{
@@ -154,7 +154,7 @@ public class Tasks {
 
     }
 
-    public static void readTasks(){
+    public static void readTasks(Pane pane){
         //JSON parser object to parse read file
         JSONParser jsonParser = new JSONParser();
 
@@ -163,13 +163,12 @@ public class Tasks {
 
             //Read JSON file
             Object obj = jsonParser.parse(reader);
-            //JSONArray taskList = (JSONArray) obj;
 
             JSONArray taskList = (JSONArray) obj;
 
             if (taskList instanceof JSONArray) {
 //                JSONObject jsonObject = (JSONObject) obj;
-                taskList.forEach( emp -> parseTaskObject( (JSONObject) emp ) );//emp is a array
+                taskList.forEach( emp -> parseTaskObject( (JSONObject) emp, pane ) );//emp is a array
             } else {
                 System.out.println("The file does not contain a JSON object.");
             }
@@ -181,21 +180,26 @@ public class Tasks {
         }
     }
 
-    private static void parseTaskObject(JSONObject thisTask)
+    private static void parseTaskObject(JSONObject thisTask, Pane pane)
     {
+        //JSONObject thisTask = (JSONObject) task.get("Task");
 
-        String tdate = (String) thisTask.get("Date");
+        long tdate = (long) thisTask.get("Date");
 
-        String tisDone = (String) thisTask.get("isDone");
+        boolean tisDone = (boolean) thisTask.get("IsDone");
 
         String tname = (String) thisTask.get("Name");
 
-        String tmonth = (String) thisTask.get("Month");
+        long tmonth = (long) thisTask.get("Month");
 
-        String tdifficulty = (String) thisTask.get("Difficulty");
+        long tdifficulty = (long) thisTask.get("Difficulty");
 
-        String ttaskID = (String) thisTask.get("TaskID");
+        long ttaskID = (long) thisTask.get("taskID");
 
-        taskList.add(new Tasks( tname, Integer.parseInt(tdate), Integer.parseInt(tmonth), Boolean.parseBoolean(tisDone), Integer.parseInt(tdifficulty), Integer.parseInt(ttaskID)));
+        Tasks tempTask = new Tasks( tname, tdate, tmonth, tisDone, tdifficulty, ttaskID);
+
+        taskList.add(tempTask);
+
+        tempTask.showTask(pane);
     }
 }
