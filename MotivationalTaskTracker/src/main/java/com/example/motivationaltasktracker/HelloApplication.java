@@ -13,6 +13,8 @@ import java.io.IOException;
 
 /**
  * @author Jackson Ding, Nick Mavs, Ben Sheng, Crescent School, ICS4U
+ * MOTIVATIONAL TASK TRACKER
+ * DAVID GOGGINS - "STAY HARD"
  * Version 1.19 - ALL PROBLEMS FIXED (Hopefully)
  */
 public class HelloApplication extends Application {
@@ -97,9 +99,6 @@ public class HelloApplication extends Application {
 
         //add the button and text fields to the pane
         root.getChildren().addAll(name, date, month, difficulty, createTask);
-        //reads the tasks and upadtes the tasks for the JSON file
-         Tasks.readTasks(root);
-         Tasks.displayAllTask(root);
 
         //when the button to create a task is pressed create a new task and add all of the information entered
         createTask.setOnAction(event -> {
@@ -115,6 +114,10 @@ public class HelloApplication extends Application {
                 throw new RuntimeException(e);
             }
         });
+
+        //reads the tasks and upadtes the tasks for the JSON file
+        Tasks.readTasks(root);
+        Tasks.displayAllTask(root);
 
         // Show the Stage
         primaryStage.show();

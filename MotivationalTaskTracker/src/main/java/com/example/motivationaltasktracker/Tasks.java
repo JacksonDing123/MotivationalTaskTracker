@@ -298,8 +298,8 @@ public class Tasks {
         ImageView imageView = new ImageView(backgroundImage);
         Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
         //use primaryScreenBounds to make sure that the image fills any sized window
-        imageView.setFitWidth(primaryScreenBounds.getWidth()); // Set your preferred width
-        imageView.setFitHeight(primaryScreenBounds.getHeight()); // Set your preferred height
+        imageView.setFitWidth(500); // Set your preferred width
+        imageView.setFitHeight(600); // Set your preferred height
         motivatePane.getChildren().add(imageView);
         //switch the the movtated scene with the image and randomized quote at the top
         HelloApplication.primaryStage.setScene(motivateScene);
@@ -320,7 +320,7 @@ public class Tasks {
      public static void updateTaskList() throws IOException{
 
          //get the file based on local path and create the required variables for writing into json
-         File info = new File("/Users/jacksonding/Documents/AP CompSCi/MotivationalTaskTracker copy/MotivationalTaskTracker/src/main/java/com/example/motivationaltasktracker/info.json");
+         File info = new File("./src/main/java/com/example/motivationaltasktracker/info.json");
 
          FileWriter file = new FileWriter(info);
 
@@ -359,7 +359,7 @@ public class Tasks {
          //JSON parser object to parse read file
          JSONParser jsonParser = new JSONParser();
 
-         File info = new File("/Users/jacksonding/Documents/AP CompSCi/MotivationalTaskTracker copy/MotivationalTaskTracker/src/main/java/com/example/motivationaltasktracker/info.json");
+         File info = new File("./src/main/java/com/example/motivationaltasktracker/info.json");
 
          try (FileReader reader = new FileReader(info))
          {
