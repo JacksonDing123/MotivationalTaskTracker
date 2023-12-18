@@ -3,6 +3,7 @@ package com.example.motivationaltasktracker;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -102,7 +103,23 @@ public class HelloApplication extends Application {
 
         //when the button to create a task is pressed create a new task and add all of the information entered
         createTask.setOnAction(event -> {
-            Tasks.taskList.add(new Tasks(name.getText(), Integer.parseInt(date.getText()), Integer.parseInt(month.getText()), false, Integer.parseInt(difficulty.getText()), taskIDSet++, root));
+
+            //checks if any of the dates are unreaonable
+            if(Integer.parseInt(month.getText())<=0||Integer.parseInt(month.getText())>12||Integer.parseInt(date.getText())<=0||Integer.parseInt(date.getText())>31){
+                Alert alertDate = new Alert(Alert.AlertType.ERROR);
+                alertDate.setTitle("Invalid Date");
+                alertDate.setHeaderText(null);
+                alertDate.setContentText("Please enter a valid date (1-31 for date and 1-12 for month).");
+                alertDate.showAndWait();
+            }
+            else if(Integer.parseInt(difficulty.getText())<1||Integer.parseInt(difficulty.getText())>10){
+                Alert alertDiff = new Alert(Alert.AlertType.ERROR);
+                alertDiff.setTitle("Invalid Date");
+                alertDiff.setHeaderText(null);
+                alertDiff.setContentText("Please enter a valid difficulty (1-10).");
+                alertDiff.showAndWait();
+            }
+            else {Tasks.taskList.add(new Tasks(name.getText(), Integer.parseInt(date.getText()), Integer.parseInt(month.getText()), false, Integer.parseInt(difficulty.getText()), taskIDSet++, root));}
             name.clear();
             date.clear();
             month.clear();
